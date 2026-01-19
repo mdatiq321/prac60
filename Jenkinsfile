@@ -1,4 +1,3 @@
-
 pipeline {
     agent any
 
@@ -19,8 +18,7 @@ pipeline {
 
         stage('Maven Build') {
             steps {
-                sh 'sh 'mvn clean package -Dmaven.repo.local=.m2'
-'
+                sh 'mvn clean package -Dmaven.repo.local=.m2'
             }
         }
 
@@ -38,8 +36,8 @@ pipeline {
                     passwordVariable: 'PASS'
                 )]) {
                     sh '''
-                    echo $PASS | docker login -u $USER --password-stdin
-                    docker push $REGISTRY/$IMAGE_NAME:$IMAGE_TAG
+                        echo $PASS | docker login -u $USER --password-stdin
+                        docker push $REGISTRY/$IMAGE_NAME:$IMAGE_TAG
                     '''
                 }
             }
@@ -48,13 +46,13 @@ pipeline {
         stage('Deploy to Docker Swarm') {
             steps {
                 sh '''
-                docker service rm java-service || true
+                    docker service rm java-service || true
 
-                docker service create \
-                --name java-service \
-                --replicas 2 \
-                --network app-network \
-                $REGISTRY/$IMAGE_NAME:$IMAGE_TAG
+                    docker service create \
+                        --name java-service \
+                        --replicas 2 \
+                        --network app-network \
+                        $REGISTRY/$IMAGE_NAME:$IMAGE_TAG
                 '''
             }
         }
