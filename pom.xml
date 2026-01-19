@@ -5,4 +5,10 @@
     <artifactId>app</artifactId>
     <version>1.0</version>
 
+    <properties>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+</properties>
+
+
 </project>
