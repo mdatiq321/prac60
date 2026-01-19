@@ -19,7 +19,8 @@ pipeline {
 
         stage('Maven Build') {
             steps {
-                sh 'mvn clean package'
+                sh 'sh 'mvn clean package -Dmaven.repo.local=.m2'
+'
             }
         }
 
